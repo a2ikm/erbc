@@ -7,12 +7,16 @@ module Erbc
     end
 
     def run
-      template = File.read(erb)
+      template = read_erb
       result = compile(template)
       write(result)
     end
 
     private
+
+    def read_erb
+      File.read(erb)
+    end
 
     def compile(template)
       Erbc::Compiler.new(template,
