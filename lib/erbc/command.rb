@@ -11,8 +11,13 @@ module Erbc
     def run
       path = argv[0]
       template = File.read(path)
-      result = Erbc::Compiler.new(template).compile
-      puts result
+      puts compile(template)
+    end
+
+    private
+
+    def compile(template)
+      Erbc::Compiler.new(template).compile
     end
   end
 end
