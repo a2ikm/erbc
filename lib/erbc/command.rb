@@ -1,5 +1,3 @@
-require "erb"
-
 module Erbc
   class Command
     attr_reader :erb, :options

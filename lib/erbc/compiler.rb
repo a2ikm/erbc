@@ -1,3 +1,5 @@
+require "erb"
+
 module Erbc
   class Compiler
     attr_reader :template
