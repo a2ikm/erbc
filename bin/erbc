@@ -1,0 +1,8 @@
+#!/usr/bin/env ruby
+
+require "erb"
+
+path = ARGV[0]
+template = File.read(path)
+result = ERB.new(template).result
+puts result
