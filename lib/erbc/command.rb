@@ -2,7 +2,7 @@ module Erbc
   class Command
     attr_reader :erb, :config, :output, :vars
 
-    def initialize(erb:, config: nil, output: nil, vars: [])
+    def initialize(erb:, config: nil, output: nil, vars: {})
       @erb    = erb
       @config = config
       @output = output

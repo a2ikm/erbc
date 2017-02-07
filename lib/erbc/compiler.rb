@@ -5,7 +5,7 @@ module Erbc
   class Compiler
     attr_reader :template, :env
 
-    def initialize(template, config: nil, vars: [])
+    def initialize(template, config: nil, vars: {})
       @template = template
       @env      = build_env(config: config, vars: vars)
     end
@@ -22,10 +22,10 @@ module Erbc
 
     private
 
-    def build_env(config: nil, vars: [])
+    def build_env(config: nil, vars: {})
       params = {}
       params.merge!(load_config(config))
-      params.merge!(load_vars(vars))
+      params.merge!(vars)
 
       env = Env.new
       params.each do |key, value|
@@ -40,14 +40,6 @@ module Erbc
         YAML.load_file(config)
       else
         {}
-      end
-    end
-
-    def load_vars(vars = [])
-      vars.inject({}) do |hash, nv|
-        name, value = nv.split(":", 2)
-        hash[name] = value
-        hash
       end
     end
   end

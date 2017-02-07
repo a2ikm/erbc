@@ -21,7 +21,7 @@ module Erbc
       {
         config: nil,
         output: nil,
-        vars:   [],
+        vars:   {},
       }
     end
 
@@ -36,7 +36,8 @@ module Erbc
           options[:output] = v
         end
         op.on("-v", "--var=NAME:VALUE") do |v|
-          options[:vars] << v
+          name, value = v.split(":", 2)
+          options[:vars][name] = value
         end
       end.parse!(argv)
 
