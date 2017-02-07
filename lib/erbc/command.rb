@@ -11,7 +11,7 @@ module Erbc
     def run
       path = argv[0]
       template = File.read(path)
-      result = ERB.new(template).result
+      result = Erbc::Compiler.new(template).compile
       puts result
     end
   end

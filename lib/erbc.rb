@@ -1,4 +1,5 @@
 require "erbc/command"
+require "erbc/compiler"
 require "erbc/version"
 
 module Erbc
