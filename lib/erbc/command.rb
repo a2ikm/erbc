@@ -24,10 +24,16 @@ module Erbc
       Erbc::Writer.new(options[:output]).write(result)
     end
 
-    def parse_options(argv)
-      options = {
-        vars: [],
+    def default_options
+      {
+        config: nil,
+        output: nil,
+        vars:   [],
       }
+    end
+
+    def parse_options(argv)
+      options = default_options
 
       OptionParser.new do |op|
         op.on("-c", "--config=FILE") do |v|
