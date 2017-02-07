@@ -15,7 +15,9 @@ module Erbc
     private
 
     def compile(template)
-      Erbc::Compiler.new(template, config: options[:config]).compile
+      Erbc::Compiler.new(template,
+                         config: options[:config],
+                         vars: options[:vars]).compile
     end
 
     def write(result)
@@ -23,7 +25,9 @@ module Erbc
     end
 
     def parse_options(argv)
-      options = {}
+      options = {
+        vars: [],
+      }
 
       OptionParser.new do |op|
         op.on("-c", "--config=FILE") do |v|
@@ -31,6 +35,9 @@ module Erbc
         end
         op.on("-o", "--output=FILE") do |v|
           options[:output] = v
+        end
+        op.on("-v", "--var=NAME:VALUE") do |v|
+          options[:vars] << v
         end
       end.parse!(argv)
 
