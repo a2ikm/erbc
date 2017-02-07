@@ -3,15 +3,15 @@ require "yaml"
 
 module Erbc
   class Compiler
-    attr_reader :template, :binding
+    attr_reader :template, :env
 
     def initialize(template, config: nil, vars: [])
       @template = template
-      @binding  = build_binding(config: config, vars: vars)
+      @env      = build_env(config: config, vars: vars)
     end
 
     def compile
-      ERB.new(template).result(binding)
+      ERB.new(template).result(env.b)
     end
 
     class Env
@@ -22,7 +22,7 @@ module Erbc
 
     private
 
-    def build_binding(config: nil, vars: [])
+    def build_env(config: nil, vars: [])
       params = {}
       params.merge!(load_config(config))
       params.merge!(load_vars(vars))
@@ -32,7 +32,7 @@ module Erbc
         env.define_singleton_method(key) { value }
       end
 
-      env.b
+      env
     end
 
     def load_config(config = nil)
