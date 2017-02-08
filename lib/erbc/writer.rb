@@ -1,9 +1,9 @@
 module Erbc
   class Writer
-    attr_reader :output
+    attr_reader :request
 
-    def initialize(output = nil)
-      @output = output
+    def initialize(request)
+      @request = request
     end
 
     def write(result)
@@ -15,7 +15,7 @@ module Erbc
     private
 
     def with_output_io
-      if output
+      if output = request.output
         File.open(output, "w") do |io|
           yield(io)
         end

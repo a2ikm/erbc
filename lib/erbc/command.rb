@@ -1,12 +1,9 @@
 module Erbc
   class Command
-    attr_reader :erb, :config, :output, :vars
+    attr_reader :request
 
-    def initialize(erb:, config: nil, output: nil, vars: {})
-      @erb    = erb
-      @config = config
-      @output = output
-      @vars   = vars
+    def initialize(request)
+      @request = request
     end
 
     def run
@@ -18,17 +15,15 @@ module Erbc
     private
 
     def read_erb
-      File.read(erb)
+      File.read(request.erb)
     end
 
     def compile(template)
-      Erbc::Compiler.new(template,
-                         config: config,
-                         vars: vars).compile
+      Erbc::Compiler.new(request).compile(template)
     end
 
     def write(result)
-      Erbc::Writer.new(output).write(result)
+      Erbc::Writer.new(request).write(result)
     end
   end
 end

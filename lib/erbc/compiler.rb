@@ -3,14 +3,14 @@ require "yaml"
 
 module Erbc
   class Compiler
-    attr_reader :template, :context
+    attr_reader :request, :context
 
-    def initialize(template, config: nil, vars: {})
-      @template = template
-      @context  = build_context(config: config, vars: vars)
+    def initialize(request)
+      @request = request
+      @context = build_context(request)
     end
 
-    def compile
+    def compile(template)
       ERB.new(template, nil, "-").result(context.b)
     end
 
@@ -22,10 +22,10 @@ module Erbc
 
     private
 
-    def build_context(config: nil, vars: {})
+    def build_context(request)
       params = {}
-      params.merge!(load_config(config))
-      params.merge!(vars)
+      params.merge!(load_config(request.config))
+      params.merge!(request.vars)
 
       context = Context.new
       params.each do |key, value|

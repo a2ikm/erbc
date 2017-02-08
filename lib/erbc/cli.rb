@@ -1,48 +1,35 @@
 module Erbc
   class CLI
-    attr_reader :erb, :options
+    attr_reader :request
 
     def initialize(argv)
-      @erb, @options = parse_options(argv)
+      @request = parse_arguments(argv)
     end
 
     def run
-      Command.new(
-        erb:    erb,
-        config: options[:config],
-        output: options[:output],
-        vars:   options[:vars],
-      ).run
+      Command.new(request).run
     end
 
     private
 
-    def default_options
-      {
-        config: nil,
-        output: nil,
-        vars:   {},
-      }
-    end
-
-    def parse_options(argv)
-      options = default_options
+    def parse_arguments(argv)
+      req = Request.new
 
       OptionParser.new do |op|
         op.on("-c", "--config=FILE") do |v|
-          options[:config] = v
+          req.config = v
         end
         op.on("-o", "--output=FILE") do |v|
-          options[:output] = v
+          req.output = v
         end
         op.on("-v", "--var=NAME:VALUE") do |v|
           name, value = v.split(":", 2)
-          options[:vars][name] = value
+          req.vars[name] = value
         end
       end.parse!(argv)
 
-      erb = argv.shift
-      [erb, options]
+      req.erb = argv.shift
+      req
     end
   end
 end
