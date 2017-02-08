@@ -1,4 +1,4 @@
 #!/usr/bin/env ruby
 
 require "erbc"
-Erbc::CommandBuilder.new(ARGV).build.run
+Erbc::CLI.new(ARGV).run

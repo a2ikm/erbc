@@ -1,5 +1,5 @@
+require "erbc/cli"
 require "erbc/command"
-require "erbc/command_builder"
 require "erbc/compiler"
 require "erbc/version"
 require "erbc/writer"

@@ -1,18 +1,18 @@
 module Erbc
-  class CommandBuilder
+  class CLI
     attr_reader :erb, :options
 
     def initialize(argv)
       @erb, @options = parse_options(argv)
     end
 
-    def build
+    def run
       Command.new(
         erb:    erb,
         config: options[:config],
         output: options[:output],
         vars:   options[:vars],
-      )
+      ).run
     end
 
     private
