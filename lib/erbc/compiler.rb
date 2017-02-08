@@ -11,7 +11,7 @@ module Erbc
     end
 
     def compile(template)
-      ERB.new(template, nil, "-").result(context.b)
+      ERB.new(template, nil, request.trim_mode).result(context.b)
     end
 
     class Context

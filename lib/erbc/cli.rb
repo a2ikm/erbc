@@ -22,6 +22,9 @@ module Erbc
         op.on("-o", "--output=FILE") do |v|
           req.output = v
         end
+        op.on("-T", "--trim-mode=MODE") do |v|
+          req.trim_mode = v
+        end
         op.on("-v", "--var=NAME:VALUE") do |v|
           name, value = v.split(":", 2)
           req.vars[name] = value
