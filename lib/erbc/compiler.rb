@@ -3,18 +3,18 @@ require "yaml"
 
 module Erbc
   class Compiler
-    attr_reader :template, :env
+    attr_reader :template, :context
 
     def initialize(template, config: nil, vars: {})
       @template = template
-      @env      = build_env(config: config, vars: vars)
+      @context  = build_context(config: config, vars: vars)
     end
 
     def compile
-      ERB.new(template, nil, "-").result(env.b)
+      ERB.new(template, nil, "-").result(context.b)
     end
 
-    class Env
+    class Context
       def b
         binding
       end
@@ -22,17 +22,17 @@ module Erbc
 
     private
 
-    def build_env(config: nil, vars: {})
+    def build_context(config: nil, vars: {})
       params = {}
       params.merge!(load_config(config))
       params.merge!(vars)
 
-      env = Env.new
+      context = Context.new
       params.each do |key, value|
-        env.define_singleton_method(key) { value }
+        context.define_singleton_method(key) { value }
       end
 
-      env
+      context
     end
 
     def load_config(config = nil)
