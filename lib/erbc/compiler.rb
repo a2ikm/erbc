@@ -11,7 +11,7 @@ module Erbc
     end
 
     def compile
-      ERB.new(template).result(env.b)
+      ERB.new(template, nil, "-").result(env.b)
     end
 
     class Env
