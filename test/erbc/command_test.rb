@@ -1,17 +1,17 @@
 require 'test_helper'
 
-class ErbcCommandTest < Minitest::Test
-  def test_parse_options_with_no_args
-    command = new_command([])
-    assert_nil command.erb
-    assert_nil command.options[:config]
-    assert_nil command.options[:output]
-    assert_equal [], command.options[:vars]
+class ErbcCommandTest < ErbcTest
+  def test_plain_command
+    expected = read_sample("sample1.result")
+    assert_output expected do
+      new_command(erb: sample_path("sample1.erb")).run
+    end
   end
 
   private
 
-  def new_command(argv)
-    Erbc::Command.new(argv)
+  def new_command(args = {})
+    req = new_request(args)
+    Erbc::Command.new(req)
   end
 end
