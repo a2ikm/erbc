@@ -10,11 +10,19 @@ class ErbcTest < Minitest::Test
     Erbc::Request.new(args)
   end
 
+  def root_path
+    File.expand_path("../..", __FILE__)
+  end
+
   def sample_path(name)
-    File.expand_path("../../test/samples/#{name}", __FILE__)
+    File.join(root_path, "test", "samples", name)
   end
 
   def read_sample(name)
     File.read(sample_path(name))
+  end
+
+  def out_path(name)
+    File.join(root_path, "tmp", name)
   end
 end
