@@ -25,4 +25,14 @@ class ErbcTest < Minitest::Test
   def out_path(name)
     File.join(root_path, "tmp", name)
   end
+
+  def capture_output(name)
+    path = out_path(name)
+    yield(path)
+    File.exist?(path) ? File.read(path) : nil
+  ensure
+    if File.exist?(path)
+      File.unlink(path)
+    end
+  end
 end

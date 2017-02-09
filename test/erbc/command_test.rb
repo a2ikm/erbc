@@ -24,6 +24,15 @@ class ErbcCommandTest < ErbcTest
     end
   end
 
+  def test_specifying_output_path_command
+    expected = read_sample("sample1.result")
+    actual = capture_output("sample1.actual") do |output|
+      new_command(erb: sample_path("sample1.erb"),
+                  output: output).run
+    end
+    assert_equal expected, actual
+  end
+
   private
 
   def new_command(args = {})
