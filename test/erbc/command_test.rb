@@ -8,6 +8,14 @@ class ErbcCommandTest < ErbcTest
     end
   end
 
+  def test_embedding_config_command
+    expected = read_sample("sample2.result")
+    assert_output expected do
+      new_command(erb: sample_path("sample2.erb"),
+                  config: sample_path("sample2.config.yml")).run
+    end
+  end
+
   private
 
   def new_command(args = {})
