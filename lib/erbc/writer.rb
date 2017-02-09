@@ -20,7 +20,7 @@ module Erbc
           yield(io)
         end
       else
-        yield(STDOUT)
+        yield($stdout)
       end
     end
   end
