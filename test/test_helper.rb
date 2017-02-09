@@ -11,7 +11,7 @@ class ErbcTest < Minitest::Test
   end
 
   def sample_path(name)
-    File.expand_path("../../samples/#{name}", __FILE__)
+    File.expand_path("../../test/samples/#{name}", __FILE__)
   end
 
   def read_sample(name)
