@@ -16,6 +16,14 @@ class ErbcCommandTest < ErbcTest
     end
   end
 
+  def test_embedding_vars_command
+    expected = read_sample("sample3.result")
+    assert_output expected do
+      new_command(erb: sample_path("sample3.erb"),
+                  vars: { var1: "value1" }).run
+    end
+  end
+
   private
 
   def new_command(args = {})
