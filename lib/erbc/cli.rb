@@ -13,26 +13,26 @@ module Erbc
     private
 
     def parse_arguments(argv)
-      req = Request.new
+      args = {}
 
       OptionParser.new do |op|
         op.on("-c", "--config=FILE") do |v|
-          req.config = v
+          args[:config] = v
         end
         op.on("-o", "--output=FILE") do |v|
-          req.output = v
+          args[:output] = v
         end
         op.on("-T", "--trim-mode=MODE") do |v|
-          req.trim_mode = v
+          args[:trim_mode] = v
         end
         op.on("-v", "--var=NAME:VALUE") do |v|
           name, value = v.split(":", 2)
-          req.vars[name] = value
+          (args[:vars] ||= {})[name] = value
         end
       end.parse!(argv)
 
-      req.erb = argv.shift
-      req
+      args[:erb] = argv.shift
+      Request.new(args)
     end
   end
 end

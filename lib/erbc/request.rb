@@ -18,13 +18,10 @@ module Erbc
       DEFAULT
     end
 
-    DEFAULT.each_keys do |key|
+    DEFAULT.keys.each do |key|
       class_eval <<-RUBY, __FILE__, __LINE__+1
         def #{key}
           env[:#{key}]
-        end
-        def #{key}=(val)
-          env[:#{key}] = val
         end
       RUBY
     end
